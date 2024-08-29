@@ -16,12 +16,12 @@ export class AuthController {
 	async login(
 		@Body() loginAuthDto: LoginAuthDto,
 		@Res({ passthrough: true }) response: Response,
-	) {
+	): Promise<string> {
 		const data = await this.authService.login(loginAuthDto);
 		response.cookie('auth', data.token, {
 			httpOnly: true,
 		});
-		return data;
+		return data.token;
 	}
 	@Post('logout')
 	async logout(@Res({ passthrough: true }) response: Response) {

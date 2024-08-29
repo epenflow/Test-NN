@@ -8,6 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { EncryptedService } from 'src/account/service/encrypted.service';
 import { ConfigModule } from '@nestjs/config';
+import { JwtStrategy } from 'src/auth/jwt.strategy';
 @Module({
 	imports: [
 		TypeOrmModule.forFeature([Account]),
@@ -32,6 +33,10 @@ import { ConfigModule } from '@nestjs/config';
 		 * Validations
 		 */
 		AvailableEmail,
+		/**
+		 * Passport
+		 */
+		JwtStrategy,
 	],
 })
 export class AuthModule {}

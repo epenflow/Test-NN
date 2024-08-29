@@ -17,6 +17,6 @@ export class AuthController {
 		@Res({ passthrough: true }) response: Response,
 	) {
 		const data = await this.authService.login(loginAuthDto);
-		console.log(response.headers);
+		return data;
 	}
 }

@@ -16,12 +16,16 @@ export class AuthController {
 	async login(
 		@Body() loginAuthDto: LoginAuthDto,
 		@Res({ passthrough: true }) response: Response,
-	): Promise<string> {
+	): Promise<{ token: string }> {
 		const data = await this.authService.login(loginAuthDto);
+		const expires = new Date();
+		expires.setTime(expires.getTime() + 1 * 24 * 60 * 60 * 1000);
 		response.cookie('auth', data.token, {
 			httpOnly: true,
+			sameSite: 'strict',
+			expires: expires,
 		});
-		return data.token;
+		return { token: data.token };
 	}
 	@Post('logout')
 	async logout(@Res({ passthrough: true }) response: Response) {
